@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #presentationContainer {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="presentationContainer">
+        <h1>Presentation Viewer</h1>
+        <hr>
+        <h2>Presentation Content</h2>
+        <!-- Container for presentation content -->
+        <div id="presentationContent"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase with your project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-GCRFbpLQwU55kShhS-DtNSNOPEySQ_g",
+            authDomain: "octen-29d12.firebaseapp.com",
+            databaseURL: "https://octen-29d12-default-rtdb.firebaseio.com",
+            projectId: "octen-29d12",
+            storageBucket: "octen-29d12.appspot.com",
+            messagingSenderId: "1095439842170",
+            appId: "1:1095439842170:web:da0dc8a2c414c60f33f4c3",
+            measurementId: "G-483MYXKNVL"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // Check hash on page load
+        window.onload = function() {
+            const presentationIdFromHash = window.location.hash.substring(1);
+
+            if (presentationIdFromHash) {
+                loadPresentation(presentationIdFromHash);
+            }
+        };
+
+        function loadPresentation(presentationId) {
+    // Retrieve presentation content from Firebase Realtime Database
+    const presentationRef = firebase.database().ref(`presentations/${presentationId}/code`);
+
+    presentationRef.once('value')
+                .then((snapshot) => {
+                    const presentationData = snapshot.val();
+
+                    if (presentationData) {
+                        // Set HTML content directly in the body
+                        document.body.innerHTML = presentationData.html || '';
+
+                        // Add CSS content to the head
+                        const styleElement = document.createElement('style');
+                        styleElement.innerHTML = presentationData.css || '';
+                        document.head.appendChild(styleElement);
+
+                        // Add JS content before the closing body tag
+                        const scriptElement = document.createElement('script');
+                        scriptElement.innerHTML = presentationData.js || '';
+                        document.body.appendChild(scriptElement);
+                    } else {
+                        alert('Presentation not found.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading presentation:', error);
+                });
+        }
+
+    </script>
+</body>
+</html>

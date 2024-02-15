@@ -9,8 +9,39 @@ body {
 }
 button {
     border: none;
-    background: cornflowerblue;
+    background: #5845ff;
     border-radius: .3em;
-    padding: .5em;
+    height: 3em;
+    width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #fff
+}
+input[type=text], input[type=number]{
+    border: 1px solid #eee;
+    border-radius: .4em;
+    height: 2.5em;
+    width: 20em;
+    padding: .5em;
+}
+button {
+    cursor: pointer;
+}
+input::file-selector-button {
+    font-weight: bold;
+    color: #fff;
+    background: #5845ff;
+    padding: 0.5em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+#imagePreviewContainer img {
+    height: 10em;
+    border-radius: 0.4em;
+    margin-block: 2em;
+    margin-right: 0.5em;
 }

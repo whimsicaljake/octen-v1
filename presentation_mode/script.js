@@ -16,6 +16,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
+const realTimeDb = firebase.database();
+
 
 // Check if user is logged in
 auth.onAuthStateChanged(user => {
@@ -37,58 +39,50 @@ googleSignInButton.addEventListener('click', signInWithGoogle);
 
 // Function to sign in with Google
 function signInWithGoogle() {
-  var provider = new firebase.auth.GoogleAuthProvider();
+    var provider = new firebase.auth.GoogleAuthProvider();
 
-  // Sign in with Google using Firebase Auth
-  firebase.auth().signInWithPopup(provider)
-    .then(function(result) {
-      // User signed in successfully
-      var user = result.user;
+    // Sign in with Google using Firebase Auth
+    firebase.auth().signInWithPopup(provider)
+        .then(function (result) {
+            // User signed in successfully
+            var user = result.user;
 
-      // Check if it's the user's first time signing in
-      if (result.additionalUserInfo.isNewUser) {
-        // Get user data
-        var photoURL = user.photoURL;
-        var displayName = user.displayName;
-        var uid = user.uid;
-
-        // Set additional user data in Firestore
-        var db = firebase.firestore();
-        var userRef = db.collection('users').doc(uid);
-
-        userRef.set({
-          photoURL: photoURL,
-          displayName: displayName,
-          subscription: false,
-          coinBalance: 0,
-          hash: uid,
-          uid: uid,  // Add the user's UID field
-          verified: false
+            // Check if it's the user's first time signing in
+            var isNewUser = result.additionalUserInfo.isNewUser;
+            if (isNewUser) {
+                // User doesn't exist, redirect to register.html
+                window.location.href = '/login.html';
+            } else {
+                // User already exists, log them in
+                console.log('User already exists in Firestore. Logging in...');
+                console.log(user);
+            }
         })
-        .then(function() {
-          console.log('User data saved successfully.');
-        })
-        .catch(function(error) {
-          console.error('Error saving user data:', error);
+        .catch(function (error) {
+            // Handle sign in errors
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.error(errorCode, errorMessage);
         });
-      }
-      
-      console.log(user);
-    })
-    .catch(function(error) {
-      // Handle sign in errors
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.error(errorCode, errorMessage);
-    });
 }
 
+  
+
+
+// Function to show success alert with presentation ID as a link
+function showSuccessAlert(presentationId) {
+    // Redirect the user to the presentation page
+    window.location.href = `/view/${presentationId}`;
+}
 
 // Upload images to Firestore and Storage
 document.getElementById("uploadButton").addEventListener("click", () => {
     const user = auth.currentUser;
     if (user) {
         const title = document.getElementById("titleInput").value;
+        const priceInput = document.getElementById("price").value; // Get the price input value
+        const price = priceInput ? parseFloat(priceInput) : 0; // Parse the price input or set default to 0
+
         const imageInput = document.getElementById("imageInput");
         const images = Array.from(imageInput.files);
 
@@ -99,15 +93,28 @@ document.getElementById("uploadButton").addEventListener("click", () => {
             // Create a new presentation document in Firestore
             const newPresentation = {
                 title: title,
+                price: price, // Add price to the presentation
                 uid: user.uid,
-                displayName: userData.displayName, // Use displayName from Firestore
-                photoURL: userData.photoURL // Use photoURL from Firestore
+                username: userData.username, // Use username from Firestore
+                photoURL: userData.photoURL,
+                uid: user.uid // Use photoURL from Firestore
             };
 
             db.collection("presentations").add(newPresentation).then(presentationRef => {
                 const presentationId = presentationRef.id; // Get the presentation ID
                 const storageRef = storage.ref(`presentations/${user.uid}/${presentationId}`);
+                // Update the Realtime Database with UID, Presentation ID, and create "code" subfolder
+    realTimeDb.ref(`presentations/${presentationId}`).set({
+        uid: user.uid,
+        presentationId: presentationId
+    });
 
+    // Create a subfolder named "code" for the presentation in Realtime Database
+    realTimeDb.ref(`presentations/${presentationId}/code`).set({
+        css: "",
+        html: "",
+        js: ""
+    });
                 images.forEach(image => {
                     const imageFileName = `${Date.now()}_${image.name}`;
                     const imageRef = storageRef.child(imageFileName);
@@ -118,7 +125,7 @@ document.getElementById("uploadButton").addEventListener("click", () => {
                             presentationRef.update({
                                 imageURLs: firebase.firestore.FieldValue.arrayUnion(url)
                             }).then(() => {
-                                // Show success alert with presentation ID as a link
+                                // Redirect the user to the presentation page
                                 showSuccessAlert(presentationId);
                             });
                         });
@@ -130,30 +137,54 @@ document.getElementById("uploadButton").addEventListener("click", () => {
         });
     }
 });
-// Function to show success alert with presentation ID as a link
-function showSuccessAlert(presentationId) {
-    // You can customize the alert appearance based on your needs
-    const successAlert = document.createElement("div");
-    successAlert.classList.add("success-alert");
-    successAlert.innerHTML = `
-        Images uploaded successfully! View your post <a href="./session.html#${presentationId}">Go to Presentation</a>.
-    `;
+
+
+// Function to preview the selected images
+function previewImages() {
+    const imageInput = document.getElementById("imageInput");
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    imagePreviewContainer.innerHTML = "";
+
+    const images = Array.from(imageInput.files);
     
-    document.body.appendChild(successAlert);
+    images.forEach(image => {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            // Create image element
+            const imgElement = document.createElement("img");
+            imgElement.src = e.target.result;
+            imgElement.alt = "Selected Image";
+
+            // Add the image to the image preview container
+            imagePreviewContainer.appendChild(imgElement);
+        };
+
+        reader.readAsDataURL(image);
+    });
 }
 
 
 // Load images from Firestore
 function loadImages(uid) {
-    const imageContainer = document.getElementById("imageContainer");
-    imageContainer.innerHTML = "";
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    imagePreviewContainer.innerHTML = "";
 
     db.collection("presentations").where("uid", "==", uid).get().then(snapshot => {
         snapshot.forEach(doc => {
             const data = doc.data();
-            const image = document.createElement("img");
-            image.src = data.imageURL;
-            imageContainer.appendChild(image);
+
+            // Assuming you want to show only the first image
+            const imageURL = data.imageURLs[0];
+
+            // Create image element
+            const imgElement = document.createElement("img");
+            imgElement.src = imageURL;
+            imgElement.alt = "Presentation Image";
+
+            // Add the image to the image preview container
+            imagePreviewContainer.appendChild(imgElement);
         });
     });
 }
+
