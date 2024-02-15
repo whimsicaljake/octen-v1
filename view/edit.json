@@ -1,0 +1,14 @@
+// Get the presentation ID from the URL path
+const presentationId = extractPresentationIdFromPath();
+
+// Check if presentationId is valid
+if (!presentationId) {
+    console.error('Invalid presentationId:', presentationId);
+    // Handle the error or redirect the user to an error page
+}
+
+function extractPresentationIdFromPath() {
+    // Example: If your path is "/presentations/abc123", this function should return "abc123"
+    const pathParts = window.location.pathname.split('/');
+    return pathParts[pathParts.length - 1];
+}

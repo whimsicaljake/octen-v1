@@ -1,0 +1,17 @@
+{
+    "hosting": {
+      "public": "octen-v1",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/demo/**",
+          "destination": "/demo/index.html"
+        }
+      ]
+    }
+  }
+  

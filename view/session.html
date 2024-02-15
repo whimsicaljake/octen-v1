@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Details</title>
+    <link rel="stylesheet" href="./session.css">    <link rel="stylesheet" href="./mobile.css">
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css' integrity='sha512-tx5+1LWHez1QiaXlAyDwzdBTfDjX07GMapQoFTS74wkcPMsI3So0KYmFe6EHZjI8+eSG0ljBlAQc3PQ5BTaZtQ==' crossorigin='anonymous'/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver/dist/FileSaver.min.js"></script>
+
+</head>
+<body>
+   <div class="main-pane">
+       
+
+   <!-- Your existing HTML structure remains unchanged -->
+
+   <div id="editorContainer" class="editor-pane">
+       <input type="checkbox" name="toggle-view" id="toggle-view">
+       <div class="sub-editor">
+           <div class="label-pane">
+               <label for="changehtml">HTML</label>
+               <label for="changecss">CSS</label>
+               <label for="changejs">JS</label>
+               <label for="toggle-view" class="toggle-view-label"><i class="fa fa-lock"></i></label>
+               <label for="exit"><i class="fa-solid fa-caret-down"></i></label>
+           </div>
+           <div class="r-editor" style="width: 100%;">
+
+          
+           <input type="radio" name="tabs" id="changehtml" checked>
+    <div class="html-pane change">
+       
+        <textarea spellcheck="false" id="htmlEditor"></textarea>
+    </div>
+    <input type="radio" name="tabs" id="changecss">
+    <div class="css-pane change">
+       
+        <textarea spellcheck="false" id="cssEditor"></textarea>
+    </div>
+    <input type="radio" name="tabs" id="changejs">
+    <div class="js-pane change">
+        
+        <textarea spellcheck="false" id="jsEditor"></textarea>
+    </div> 
+</div>
+       </div>
+       
+    <div class="preview-pane">
+         <iframe id="previewFrame"></iframe>
+    </div>
+   
+</div>
+
+
+    
+
+   </div>
+   
+
+    <div id="chatContainer">
+        <div class="info">
+            <div id="presentationInfo"></div>
+        </div>
+        <div id="chatMessages"></div>
+        <img id="imagePreview" src="" alt="Image Preview" style="display: none; max-width: 200px; max-height: 200px;">
+        <div class="message-box">
+            <label for="imageInput" class="attachment"><span class="material-symbols-rounded">
+                link
+                </span></label>
+            <div class="input-box">
+                 <input type="text" id="messageInput" placeholder="Type a message..."> <button id="sendMessageButton"><span class="material-symbols-rounded">
+                    send
+                    </span></button>
+            </div>
+           
+        <input type="file" id="imageInput">
+       
+        </div>
+        
+    </div>
+<div class="private_mode">
+    The admin changed the privacy setting to private mode.
+</div>
+<div class="purchase-container">
+    <buutton id="purchaseButton">
+        Purchase
+    </buutton>
+</div>
+<input type="checkbox" name="" id="exit">
+<div class="pop-up">
+    <label for="exit" class="exit"><i class="fa-solid fa-xmark"></i></label>
+    <div class="navigator">
+    
+<input type="text" style="display: none;" id="externalpresentationid">
+
+
+<button id="importButton"><i class="fas fa-file-import"></i></button>
+<button id="downloadAll"><i class="fas fa-file-export"></i></button>
+<button id="saveVersionButton">Save Version</button>
+<a href="" id="fullpage" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+</div>
+<!-- Versions List Div -->
+<div id="versionsList"></div>
+<div id="imageContainer"></div>
+</div>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+    <script src="./session.js"></script>
+    <script src="./carousel.js"></script>
+</body>
+</html>

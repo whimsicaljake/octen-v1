@@ -1,0 +1,473 @@
+
+
+
+/* Your existing CSS rules remain unchanged */
+*{
+    margin: 0;
+    padding: 0;
+}
+*::-webkit-scrollbar {
+    display: none;
+}
+*:focus {
+    outline: none;
+}
+body {
+    display: flex;
+    gap: 2em;
+    background-color: #020409;
+    color: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+p.reply-to {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+    text-decoration: line-through;
+}
+.main-pane {
+    width: 80%;
+    height: 100vh;
+    overflow: hidden;
+}
+#codeEditorContainer {
+    margin-top: 20px;
+}
+
+#codeEditor {
+    width: 100%;
+    height: 300px;
+}
+
+#updateButton {
+    margin-top: 10px;
+    color: red;
+}
+
+#codePreview {
+    margin-top: 20px;
+}
+.preview-pane {
+    width: 100%;
+}
+#previewFrame {
+    width: 100%;
+    height: 92%;
+    border: none;
+    position: relative;
+    top: 3em;
+    background: #fff;
+}
+#previewFrame::-webkit-scrollbar {
+    background: red !important;
+}
+#previewFrame::-webkit-scrollbar-thumb {
+    background: green !important;
+}
+#previewFrame::-webkit-scrollbar-track {
+    background: green !important;
+}
+.editor-pane {
+    display: flex;
+}
+ /* Define styles for different types of code elements */
+ .keyword { color: blue; }
+ .string { color: green; }
+ /* Add more classes for other elements */
+
+ textarea {
+    height: 87vh;
+    width: 90% !important;
+    display: block;
+    background: #1c2641;
+    color: #f8fcfb;
+    border: none;
+    padding: 0.4em;
+    resize: none;
+    /* overflow-x: hidden; */
+    white-space: pre-wrap;
+    text-wrap: wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+input[type=radio], input[type=checkbox]{
+    display: none;
+}
+.change {
+    display: none;
+}
+.sub-editor {
+    width: 100%;
+}
+#changehtml:checked ~ .html-pane {
+    display: block;
+}
+#changehtml:checked + label {
+    color: red
+}
+#changecss:checked ~ .css-pane {
+    display: block;
+}
+#changejs:checked ~ .js-pane {
+    display: block;
+}
+.label-pane {
+    display: flex;
+    align-items: center;
+    gap: ;
+}
+.label-pane label {
+    width: 5em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #677481;
+    background: #020409;
+}
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+.chat-details {
+    display: flex;
+    align-items: center;
+    margin-top: .5em;
+    gap: .5em;
+}
+.chat-content{
+    position: relative;
+    left: 2.5em;
+    word-wrap: break-word;
+    width: 82%;
+}
+.input-box {
+    background: #34393f;
+    border-radius: 9999px;
+    padding: .5em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.reply-box {
+    background: #34393f;
+    border-radius: 9999px;
+    padding: .5em;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+.input-box input, button, input {
+    border: none;
+    background: transparent;
+    color: #8997a7;
+}
+.input-box input {
+    width: 100%;
+}
+#imageInput {
+    display: none;
+}
+.attachment {
+    position: relative;
+    float: right;
+}
+label {
+    cursor: pointer;
+}
+
+
+
+#chatContainer {
+    width: 20%;
+    height: 94vh;
+    padding: 1em;
+    position: relative;
+    background-color: #020409;
+    display: block;
+}
+#chatMessages{
+    height: 75vh !important;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.chat-sender {
+    font-weight: bold;
+}
+.chat-sender::after {
+    content: ': ';
+}
+.chat-image {
+    display: block;
+    border-radius: .5em;
+    width: 80%;
+    position: relative;
+    left: 2.6em;
+    margin-top: .5em;
+}
+.message-box {
+    position: absolute;
+    bottom: 1em;
+    width: 90%;
+ 
+}
+.chat-photo {
+    width: 2em;
+    height: 2em;
+    border-radius: .15em;
+}
+
+.url {
+    display: block !important;
+    text-decoration: none;
+    color: dodgerblue;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+.info {
+    height: 2.5em;
+    margin-bottom: .2em;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.private_mode {
+    bottom: 1em;
+    right: 1em;
+    position: fixed;
+    z-index: 10;
+    background: rgba(30, 173, 255, 0.342);
+    padding: .5em;
+    border-radius: .3em;
+    font-weight: 100;
+    pointer-events: none;
+    display: none;
+}
+
+.reply {
+    padding-left: 4em;
+}
+button {
+    cursor: pointer;
+}
+span.version-tag {
+    color: #79b791;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+div#imageContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    row-gap: 2em;
+    overflow: scroll;
+    height: auto;
+}
+#imageContainer img {
+width: 100%;
+border-radius: .5em;
+}
+.carouselContainer {
+    position: relative;
+    overflow: scroll;
+  }
+  
+  .carouselOfImages {
+    position: relative;
+    width: 100%;
+    white-space: nowrap;
+    cursor: pointer;
+    bottom: 0;
+    height: 100%;
+    overflow: hidden;
+}
+ 
+  .carouselImage {
+    display: inline-block;
+    margin-left: 20px;
+    user-select: none;
+    background: tomato;
+    width: 10em;
+    height: 14vh !important;
+    color: #222;
+    pointer-events: none;
+    border-radius: .5em;
+  }
+  .carouselImage:last-child {
+    margin-right: 20px;
+  }
+
+  .purchase-container {
+    display: none;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  #purchaseButton {
+    background-color: cornflowerblue;
+    padding: .5em;
+    border-radius: .4em;
+  }
+#imagePreview {
+    position: fixed;
+    bottom: 5em;
+}
+
+
+  /* Tablets (portrait and landscape) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Your styles for tablets go here */
+    #chatContainer {
+        display: none;
+    }
+    .main-pane{
+        width: 100%;
+    }
+  }
+  
+
+
+.pop-up {
+    height: 70%;
+    padding: 5%;
+    width: 80%;
+    position: fixed;
+    top: 120vh;
+    left: 120vw;
+    background: wheat;
+    color: black;
+    overflow: scroll;
+}
+.navigator {
+    height: 8em;
+    width: 100%;
+    border-radius: 1em;
+    background: #1c2641;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 2em
+}
+.navigator i, ion-icon{
+    font-size: 2em;
+    cursor: pointer;
+}
+.navigator a {
+    text-decoration: none;
+    color: #8997a7;
+}
+.exit {
+    float: right;
+    margin-bottom: 1em;
+}
+#exit:checked ~ .pop-up {
+    top: 5vh;
+    left: 5vw;
+}
+.change {
+    padding: 1em;
+    background: #1c2641;
+}
+#sendReplyButton, #cancelReplyButton {
+    padding: 0.5em;
+}
+
+#versionsList {
+    margin-bottom: 1em;
+}
+* {
+    
+    transition: 0.3s ease-out;
+}
+details[open] > ul {
+    height: 3em; /* Adjust the maximum height as needed */
+}
+details > ul {
+    height: 0em; /* Set the desired height when closed */
+    overflow: hidden; /* Hide the content when closed */
+    transition: 0.3s ease; /* Add a smooth transition effect */
+  }
+details li {
+    list-style: none;
+    padding-left: 2em;
+}
+details summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3em;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    padding-inline: 1em;
+    cursor: pointer;
+}
+details:first-child summary{
+    border: 1px solid #333;
+    border-top-right-radius: .5em;
+    border-top-left-radius: .5em;
+}
+details:last-child summary{
+    border-bottom-right-radius: .5em;
+    border-bottom-left-radius: .5em;
+}
+summary div {
+    width: 100%;
+}
+summary div:nth-child(2){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+summary div:nth-child(3){
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+details ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    padding-inline: 1em;
+    cursor: pointer;
+}
+.userdetails {
+    display: flex;
+    gap: 1em;
+}
+.user-image {
+    border-radius: 9999px;
+}
+.error {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+    font-size: 1.2em;
+}
