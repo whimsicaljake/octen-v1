@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Octen - User Dashboards </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="./style.css">
+<link rel="shortcut icon" href="/images/lgo_unveil.png" type="image/png">
+<meta name="description" content="The platform where developers unite to construct, collaborate, and engage.">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<header class="header">
+	<div class="header-content responsive-wrapper">
+		<div class="header-logo">
+			<a href="#">
+				<div>
+					<img src="https://assets.codepen.io/285131/untitled-ui-icon.svg" />
+				</div>
+<p id="userName">
+
+</p>			</a>
+		</div>
+		<div class="header-navigation">
+			<nav class="header-navigation-links">
+				<a href="#"> Home </a>
+				<a href="#"> Trending </a>
+				<a href="#"> Search </a>
+				<a href="#"> Tasks </a>
+				<a href="#"> Reporting </a>
+				<a href="#"> Users </a>
+			</nav>
+			<div class="header-navigation-actions">
+				<a href="#" class="button">
+					<i class="ph-lightning-bold"></i>
+					<span id="coinBalance"></span>
+				</a>
+				<a href="#" class="icon-button">
+					<i class="ph-shopping-cart-bold"></i>
+				</a>
+				<a href="#" class="icon-button">
+					<i class="ph-bell-bold"></i>
+				</a>
+				<a href="#" class="avatar">
+					<img src="" alt="" id="userPhoto" />
+				</a>
+			</div>
+		</div>
+		<a href="#" class="button">
+			<i class="ph-list-bold"></i>
+			<span>Menu</span>
+		</a>
+	</div>
+</header>
+<main class="main">
+	<div class="responsive-wrapper">
+		<div class="main-header">
+			<h1>Settings</h1>
+			<div class="search">
+				<input type="text" placeholder="Search" />
+				<button type="submit">
+					<i class="ph-magnifying-glass-bold"></i>
+				</button>
+			</div>
+		</div>
+		<div class="horizontal-tabs">
+			<a href="#">My details</a>
+			<a href="#">Profile</a>
+			<a href="#">Password</a>
+			<a href="#">Team</a>
+			<a href="#">Plan</a>
+			<a href="#">Billing</a>
+			<a href="#">Email</a>
+			<a href="#">Notifications</a>
+			<a href="#" class="active">Presentations</a>
+			<a href="#">Help</a>
+		</div>
+		<div class="content-header">
+			<div class="content-header-intro">
+				<h2>Managing Presentation Data</h2>
+				<p>Stay on top of every detail of your presentation and track realtime progress.</p>
+			</div>
+			<div class="content-header-actions">
+				<a href="#" class="button">
+					<i class="ph-faders-bold"></i>
+					<span>Filters</span>
+				</a>
+				<a href="/presentation_mode/index.html" class="button">
+					<i class="ph-plus-bold"></i>
+					<span>New Presentation</span>
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<div class="content-panel">
+				<div class="vertical-tabs">
+					<a href="#" class="active">View all</a>
+					<a href="#">Collab Editor</a>
+					<a href="#">Manage Assets</a>
+					<a href="#">Productivity</a>
+					<a href="#">Your portfolio</a>
+				</div>
+			</div>
+			<div class="content-main">
+				<div class="card-grid" id="presentationCards">
+					
+				<!-- This is where the presentations will be dynamically added -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- partial -->
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+  <script src='https://unpkg.com/phosphor-icons'></script><script  src="./script.js"></script>
+<script src="/firebase.js"></script>
+<script src="./backend.js"></script>
+</body>
+</html>
