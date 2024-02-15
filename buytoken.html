@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Tokens</title>
+    <link rel="stylesheet" href="/buytoken.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <!-- Include Paystack script -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Your Firebase configuration -->
+
+</head>
+<body>
+    <nav>
+        <ul>
+           <li class="logo"><img src="./images/lgo_light.png" alt="logo" style="width: 20%;"></li>
+           <li class="items"><a href="#">Product</a></li>
+           <li class="items"><a href="#">Resources</a></li>
+           <li class="items"><a href="#">Support</a></li>
+           <li class="items"><a href="#">Pricing</a></li>
+           <li class="items"><a href="#">Blog</a></li>
+           <li class="btn"><a href="#"><i class="fas fa-bars"></i></a></li>
+        </ul>
+     </nav>
+     <header>
+        <div class="first-div">
+            <p>/Get More Tokens On The Go</p>
+            <h1>Payments</h1>
+            <p>Don't be left stranded unable to access top tier presentations. <br> Renew your tokens before it runs out.</p>
+            <div class="form-container">
+                <div class="input-container">
+                    <span class="material-symbols-outlined">
+                        payments
+                        </span>
+                     <input type="number" id="coinAmount" min="1" placeholder="Enter the amount">
+                </div>
+               
+    <button onclick="initiatePayment()">Purchase Coins</button>
+
+            </div>
+            <p>*No Personal Guarantee Or Personal Credit Check Required</p>
+
+            <div class="showcase">
+                <section>
+                     <h2>150k+</h2>
+                <p>Tokens Bought</p>
+                </section>
+               
+<section>
+      <h2>120k+</h2>
+                <p>Token Used</p>
+</section>
+              
+            </div>
+        </div>
+        <div class="second-div">
+            <img class="shadow" src="./images/card.png" alt="">
+        </div>
+     </header>
+
+     <script src="./buytoken.js"></script>
+</body>
+</html>

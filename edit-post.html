@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Post</title>
+  <!-- Include Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <!-- Include Quill rich text editor -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Edit Post</h1>
+  <form id="editPostForm">
+    <label for="postTitle">Title:</label><br>
+    <input type="text" id="postTitle"><br>
+    <label for="editor">Content:</label><br>
+    <div id="editor"></div><br>
+    <label for="fileInput">Add/Remove Files:</label><br>
+    <input type="file" id="fileInput" multiple><br>
+    <ul id="filesList"></ul>
+    <button type="submit">Update Post</button>
+  </form>
+
+  <!-- Include Firebase configuration and script -->
+  <script src="firebase.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>
+    // Get post ID from the URL hash
+    const postId = window.location.hash.substring(1);
+
+    const editPostForm = document.getElementById('editPostForm');
+    const postTitleInput = document.getElementById('postTitle');
+    const editorContainer = document.getElementById('editor');
+    const fileInput = document.getElementById('fileInput');
+    const filesList = document.getElementById('filesList');
+
+    // Initialize Quill editor
+    const quill = new Quill(editorContainer, {
+      theme: 'snow',
+      placeholder: 'Write something...'
+    });
+
+    // Function to retrieve post details by ID
+    function getPostById(postId) {
+      // Get the post from Firestore using the post ID
+      db.collection('posts').doc(postId).get()
+        .then((doc) => {
+          if (doc.exists) {
+            const post = doc.data();
+            // Fill the form fields with the current post details
+            postTitleInput.value = post.title;
+            quill.root.innerHTML = post.content;
+            // Display the already uploaded files with a remove button
+            if (post.files && post.files.length > 0) {
+              post.files.forEach((file, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                  <p>${file}</p>
+                  <button type="button" onclick="removeFile(${index})">Remove</button>
+                `;
+                filesList.appendChild(listItem);
+              });
+            }
+          } else {
+            console.log('Post not found.');
+          }
+        })
+        .catch((error) => {
+          console.error("Error getting document:", error);
+        });
+    }
+
+    // Function to update post details
+    function updatePost(event) {
+      event.preventDefault();
+
+      const newTitle = postTitleInput.value;
+      const newContent = quill.root.innerHTML;
+      // Get the list of already uploaded files
+      const existingFiles = Array.from(filesList.querySelectorAll('li p')).map(fileItem => fileItem.textContent);
+
+      // TODO: Perform necessary actions to update the post and its files in Firestore
+      // Update the post in Firestore with new details and files
+
+      console.log('Post successfully updated!');
+      // Redirect back to view post page
+      window.location.href = `oct-project.html#${postId}`;
+    }
+
+    // Function to remove a file from the list
+    function removeFile(index) {
+      // Remove the file from the list and update the UI
+      const files = Array.from(filesList.querySelectorAll('li'));
+      files[index].remove();
+    }
+
+    // Add submit event listener to the form
+    editPostForm.addEventListener('submit', updatePost);
+
+    // Call function to retrieve post details when the page loads
+    getPostById(postId);
+  </script>
+</body>
+</html>

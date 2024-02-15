@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'Kanit';
+    src: url('/fonts/Kanit/Kanit-Light.ttf') format('woff2'),
+         url('path/to/your/font.woff') format('woff');
+    /* Add more font formats if needed */
+}
+*{
+    margin: 0;
+    padding: 0;
+}*:focus {
+    outline: none;
+}
+body {
+    background: #131418;
+    color: #fff;
+    font-family: Kanit;
+}
+
+.shadow {
+    filter: drop-shadow(2px 60px 88px #f0f);
+}
+header {
+    display: flex;
+    padding: 4em;
+    gap: 2em;
+    align-items: center;
+    padding-top: 0;
+}
+header p {
+    font-size: 1.2em;
+}
+header h1 {
+    font-size: 6em;
+}
+header div {
+    width: 100%;
+}
+.second-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5em;
+    padding-left: 1.5em;
+    background: #202427;
+    height: 3em;
+    width: 20em;
+    border-radius: .4em;
+    overflow: hidden;
+    gap: 1em;
+}
+.input-container input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    color: #fff;
+}
+button {
+    background: #5845ff;
+    border: none;
+    height: 3.3em;
+    width: 10em;
+    display: flex;
+    color: #fff;
+    font-size: 1.1em;
+    border-radius: .4em;
+    justify-content: center;
+    align-items: center;
+}
+img {
+    width: 70%;
+}
+.showcase {
+    display: flex;
+    gap: 4em;
+    text-align: center;
+    padding-top: 1em;
+}
+.showcase h2 {
+    font-size: 2em;
+}
+nav{
+    background: #131418;
+    padding: 5px 40px;
+  }
+  nav ul{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  nav ul li{
+    padding: 15px 0;
+    cursor: pointer;
+  }
+  nav ul li.items{
+    position: relative;
+    width: auto;
+    margin: 0 16px;
+    text-align: center;
+    order: 3;
+  }
+  nav ul li.items:after{
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 5px;
+    height: 2px;
+    width: 100%;
+    background: #00c399;
+    opacity: 0;
+    transition: all 0.2s linear;
+  }
+  nav ul li.items:hover:after{
+    opacity: 1;
+    bottom: 8px;
+  }
+  nav ul li.logo{
+    flex: 1;
+    color: white;
+    font-size: 23px;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+  }
+  nav ul li a{
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    transition: .4s;
+  }
+  nav ul li:hover a{
+    color: #00c399;
+  }
+  nav ul li i{
+    font-size: 23px;
+  }
+  nav ul li.btn{
+    display: none;
+  }
+  nav ul li.btn.hide i:before{
+    content: '\f00d';
+  }
+  @media all and (max-width: 900px){
+    nav{
+      padding: 5px 30px;
+    }
+    nav ul li.items{
+      width: 100%;
+      display: none;
+    }
+    nav ul li.items.show{
+      display: block;
+    }
+    nav ul li.btn{
+      display: block;
+    }
+    nav ul li.items:hover{
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px #00c399,
+                  inset 0 0 10px #00c399;
+    }
+    nav ul li.items:hover:after{
+      opacity: 0;
+    }
+  }

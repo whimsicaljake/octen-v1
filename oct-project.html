@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View/Edit Post</title>
+  <!-- Include Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <h1>View/Edit Post</h1>
+  <div id="postDetails"></div>
+
+  <!-- Include Firebase configuration and script -->
+  <script src="firebase.js"></script>
+  <script>
+    // Get post ID from the URL hash
+    const postId = window.location.hash.substring(1);
+
+    // Function to get the current user details
+    function getCurrentUser() {
+      return new Promise((resolve, reject) => {
+        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+          unsubscribe();
+          resolve(user);
+        }, reject);
+      });
+    }
+
+    // Function to retrieve post details by ID
+    function getPostById(postId) {
+      const postDetails = document.getElementById('postDetails');
+
+      // Get the current user and compare with post owner
+      getCurrentUser().then(user => {
+        if (user) {
+          // User is signed in
+          console.log('Current User:', user.displayName); // Log the current user's display name
+          // Get the post from Firestore using the post ID
+          const db = firebase.firestore();
+          db.collection('posts').doc(postId).get()
+            .then((doc) => {
+              if (doc.exists) {
+                const post = doc.data();
+                console.log('Post Details:', post); // Log the post details
+
+                // Display post details on the page
+                postDetails.innerHTML = `
+                  <h3>${post.title}</h3>
+                  <p>${post.content}</p>
+                  <p>Username: ${post.username}</p>
+                  <img src="${post.photoURL}" alt="User Photo">
+                `;
+
+                // Check if the current user is the creator of the post
+                if (user.username === post.username) {
+                  const editButton = document.createElement('button');
+                  editButton.textContent = 'Edit Post';
+                  editButton.addEventListener('click', () => {
+                    // Redirect to edit page passing the post ID
+                    window.location.href = `edit-post.html#${postId}`;
+                  });
+                  postDetails.appendChild(editButton);
+                } else {
+                  console.log('User does not match post owner.');
+                }
+              } else {
+                postDetails.innerHTML = 'Post not found.';
+              }
+            })
+            .catch((error) => {
+              console.error("Error getting document:", error);
+              postDetails.innerHTML = 'Error retrieving post.';
+            });
+        } else {
+          // No user is signed in
+          console.log("No user signed in.");
+          // Logic for scenarios when no user is signed in
+        }
+      }).catch(error => {
+        console.error("Error getting current user:", error);
+      });
+    }
+
+    // Call function to retrieve post details when the page loads
+    getPostById(postId);
+  </script>
+</body>
+</html>

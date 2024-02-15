@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Login Page</title>
+    <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css' integrity='sha512-tx5+1LWHez1QiaXlAyDwzdBTfDjX07GMapQoFTS74wkcPMsI3So0KYmFe6EHZjI8+eSG0ljBlAQc3PQ5BTaZtQ==' crossorigin='anonymous'/>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&family=Nunito:wght@200&family=Oswald&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+    <!-- Your Firebase configuration -->
+    <link rel="stylesheet" href="./login.css">
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyD-GCRFbpLQwU55kShhS-DtNSNOPEySQ_g",
+    authDomain: "octen-29d12.firebaseapp.com",
+    databaseURL: "https://octen-29d12-default-rtdb.firebaseio.com",
+    projectId: "octen-29d12",
+    storageBucket: "octen-29d12.appspot.com",
+    messagingSenderId: "1095439842170",
+    appId: "1:1095439842170:web:da0dc8a2c414c60f33f4c3",
+    measurementId: "G-483MYXKNVL"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+           <li class="navlogo"><img src="./images/lgo_light.png" alt="logo" style="width: 5em"></li>
+           <li class="items"><a href="#">Product</a></li>
+           <li class="items"><a href="#">Resources</a></li>
+           <li class="items"><a href="#">Support</a></li>
+           <li class="items"><a href="#">Pricing</a></li>
+           <li class="items"><a href="#">Blog</a></li>
+           <li class="navbtn"><a href="#"><i class="fas fa-bars"></i></a></li>
+        </ul>
+     </nav>
+     
+     <div class="section">
+       <div class="container">
+         <div class="row full-height justify-content-center">
+           <div class="col-12 text-center align-self-center py-5">
+             <div class="section pb-5 pt-5 pt-sm-2 text-center">
+               <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+               <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+               <label for="reg-log"></label>
+               <div class="card-3d-wrap mx-auto">
+                 <div class="card-3d-wrapper">
+                   <div class="card-front">
+                     <div class="center-wrap">
+                        <div class="section text-center">
+                            <h4 class="mb-4 pb-3">Log In</h4>
+                            <div class="form-group">
+                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="loginEmail" autocomplete="off">
+                                <i class="input-icon uil uil-at"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="loginPassword" autocomplete="off">
+                                <i class="input-icon uil uil-lock-alt"></i>
+                            </div>
+                            <button type="button" class="btn mt-4" onclick="login()">Submit</button>
+                            <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                        </div>
+                     </div>
+                   </div>
+                   <div class="card-back">
+                     <div class="center-wrap">
+                        <div class="section text-center">
+                            <h4 class="mb-4 pb-3">Sign Up</h4>
+                            <div class="form-group">
+                                <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="signUpName" autocomplete="off">
+                                <i class="input-icon uil uil-user"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="signUpEmail" autocomplete="off">
+                                <i class="input-icon uil uil-at"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="signUpPassword" autocomplete="off">
+                                <i class="input-icon uil uil-lock-alt"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="photo">Upload Photo:</label>
+                                <input type="file" id="photo" accept="image/*">
+                            </div>
+                            <button type="button" class="btn mt-4" onclick="signUp()">Submit</button>
+                        </div>
+                    </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   
+   
+<script>
+   
+    // Get a reference to the Firestore database
+    const db = firebase.firestore();
+
+    // Function to handle photo upload
+    const handlePhotoUpload = async (file, userId) => {
+      // Reference to the storage bucket
+      const storageRef = firebase.storage().ref(`profile_pictures/${userId}/${file.name}`);
+
+      // Upload file
+      const snapshot = await storageRef.put(file);
+
+      // Get the download URL
+      const photoURL = await snapshot.ref.getDownloadURL();
+
+      return photoURL;
+    };
+
+    // Function to sign up a user
+    const signUp = async () => {
+      const displayName = document.getElementById("signUpName").value;
+      const email = document.getElementById("signUpEmail").value;
+      const password = document.getElementById("signUpPassword").value;
+      const photoInput = document.getElementById("photo");
+      const photoFile = photoInput.files[0];
+
+      try {
+        // Create user with email and password
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+        // Get the user ID
+        const userId = userCredential.user.uid;
+
+        // Generate a unique username (you may implement your own logic)
+        const username = `user${userId.substring(0, 8)}`;
+
+        // Upload photo to storage and get the URL
+        const photoURL = photoFile ? await handlePhotoUpload(photoFile, userId) : "";
+
+        // Save user details to Firestore
+        await db.collection("users").doc(userId).set({
+          displayName: displayName,
+          username: username,
+          photoURL: photoURL,
+          subscription: false,
+          coinBalance: 0,
+          hash: userId,
+          verified: false,
+        });
+
+        // Update user profile in Firebase Auth
+        await userCredential.user.updateProfile({
+          displayName: displayName,
+          photoURL: photoURL,
+        });
+        // Send email verification
+        await userCredential.user.sendEmailVerification();
+
+        alert("Signup successful!");
+      } catch (error) {
+        console.error(error.message);
+        alert("Signup failed. Please try again.");
+      }
+    };
+
+    // Function to log in a user
+    const login = async () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        // Sign in the user
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+
+        // Check if the email is verified
+        const user = firebase.auth().currentUser;
+        if (user && user.emailVerified) {
+          // Email is verified, proceed with login
+          redirectToDashboard();
+        } else {
+          alert("Email not verified. Please check your email and click the verification link.");
+        }
+
+      } catch (error) {
+        console.error(error.message);
+        alert("Login failed. Please check your email and password.");
+      }
+    };
+    // Function to get URL parameters
+    function getURLParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Function to redirect to the dashboard
+    function redirectToDashboard() {
+        // Get the URL parameter 'returnTo' (if exists)
+        const returnTo = getURLParameter('returnTo');
+        // Redirect the user to the previous page or a default page
+        window.location.href = returnTo || '/dashboard/index.html';
+    }
+</script>
+</script>
+
+
+    <script src="./login.js"></script>
+</body>
+</html>

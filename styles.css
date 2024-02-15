@@ -1,0 +1,197 @@
+@import url("base.css");
+*{
+    font-family: 'Nunito', sans-serif;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden !important;
+}
+body {
+    background: linear-gradient(#5636d9, #aa585b), url(./images/bg.jpg);
+    background-blend-mode: overlay;
+    background-attachment: fixed;
+    background-size: cover !important;
+    color: #fff;
+    position: relative;
+    z-index: -3 !important;
+}
+.background{
+    background: linear-gradient(#5636d9, #aa585b), url(./images/bg.jpg);
+    background-blend-mode: overlay;
+    background-attachment: fixed;
+    background-size: cover !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -2;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2em;
+    background: #030013;
+}
+nav a {
+    background-color: #603df1;
+    display: flex !important;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 9999px;
+    text-decoration: none;
+    height: 2em;
+    font-size: 20px;
+    width: 8em;
+    color: var(--background);
+}
+nav .fa {
+color: #fff;
+}
+
+header{
+    background: #030013;
+    height: 20em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15em;
+}
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 35em;
+  background: #030013 !important;
+    border-radius: 0 0 60% 60% / 0 0 100% 100%;
+    transform: scaleX(1.5);
+    z-index: -1;
+  }
+  
+header h1 {
+    font-size: 3em;
+    text-align: center;
+}
+.live-count {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: auto;
+    padding: 2em;
+}
+.counts span {
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+.counts {
+    text-align: center;
+}
+.purpose {
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    padding: 4em;
+}
+.purpose h1 {
+    font-weight: bold;
+    font-size: 3em;
+}
+.purpose a{
+    background-color: #fff;
+    color: #0d0a1d !important;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 2.5em;
+    width: 18em;
+    font-weight: bold;
+    border-radius: 1em;
+}
+.second-slide {
+    box-shadow: 0px 10px 20px -3px rgba(0,0,0,0.1);
+    background: #0d0a1d;
+    width: 70%;
+    padding: 1em;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.second-slide img {
+    width: 80%;
+}
+.review-container {
+    padding: 2em;
+}
+.review {
+    background: #0d0a1d;
+    border-radius: 1em;
+    box-shadow: 0px 10px 20px -3px rgba(0,0,0,0.1);
+    padding: 2em;
+}
+.review .profile {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 1.5em;
+}
+.branding {
+    text-align: right;
+    font-size: 1.5em;
+    font-family: fantasy;
+}
+.profile img {
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+/* Targeting most common Android devices in portrait mode */
+@media only screen
+    and (min-device-width: 360px)
+    and (max-device-width: 820px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: portrait) {
+.purpose{
+    flex-direction: column;
+    gap: 7em;
+    padding: 2em;
+}
+.background{
+    background: linear-gradient(#5636d9, #aa585b), url(./images/bg-portrait.jpg);
+}
+header {
+    height: 25em;
+    background: transparent;
+}
+header h1 {
+    font-size: 2em;
+}
+header::before {
+display: none; 
+}
+nav {
+    background: transparent;
+}
+    }
+
+/* Targeting most common Android devices in landscape mode */
+@media only screen
+    and (min-device-width: 360px)
+    and (max-device-width: 820px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+    /* Your CSS styles for these Android devices in landscape mode */
+}
