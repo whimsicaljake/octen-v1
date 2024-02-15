@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <style>
+    /* Add your styles here */
+  </style>
+</head>
+<body>
+  <div id="loginDiv">
+    <!-- Google Login Button -->
+    <button onclick="googleSignIn()">Sign in with Google</button>
+  </div>
+
+  <div id="appDiv" style="display: none;">
+    <!-- Tabs -->
+    <div>
+      <button onclick="showChats()">Chats</button>
+      <button id="userList1" onclick="showOtherTab1()">View requests</button>
+      <button id="userList2" onclick="showOtherTab2()">User list</button>
+    </div>
+
+    <!-- Chat Display -->
+    <div id="chatDisplay">
+        <h2>Your Chats</h2>
+        <ul id="userList"></ul>
+    </div>
+
+    <div id="individualChat" style="display: none;">
+        <header>
+            <button onclick="goBack()">Go Back</button>
+        </header>
+        <h2 id="chatHeader"></h2>
+        <div id="messages"></div>
+        <div>
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <input type="file" id="fileInput">
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+    </div>
+</div>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+    <script src="app.js"></script>
+  </div>
+</body>
+</html>
